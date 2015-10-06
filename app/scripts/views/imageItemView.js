@@ -4,7 +4,8 @@ var imageItemView = Backbone.View.extend({
 
   events: {
     'click .delete-btn': 'delete',
-    'click .edit-btn' : 'edit'
+    'click .edit-btn' : 'edit',
+    'click .update-btn': 'update'
   },
   render: function(){
     this.$el.html(this.template(this.model.toJSON()));
@@ -14,9 +15,20 @@ var imageItemView = Backbone.View.extend({
     this.model.destroy();
   },
   edit: function(){
-    var image = this.$('.url').val();
-    var caption = this.$('.caption').val();
-    var imageview = new imageItemView({image: image, post: caption });
+    $('.image').css('display','block');
+    $('.edit-btn').hide();
+    $('.update-btn').show();
+
+    var image = this.$('.image').html();
+    var post = this.$('.post').html();
+    this.$('.image').html('<input type="text" class="image-update" value="' + image + '">');
+    this.$('.post').html('<input type="text" class="post-update" value="' + post + '">');
+  },
+  update: function(){
+    this.model.set('image', $('.image-update').val());
+    this.model.set('post', $('.post-update').val());
+    this.model.save()
+    return this;
   }
 
 });
