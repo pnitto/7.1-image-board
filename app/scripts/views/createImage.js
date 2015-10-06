@@ -1,11 +1,12 @@
-var images = require('models/image-board-collection')
+var ImageCollection = require('models/image-board-collection');
 
 var CreateImage = Backbone.View.extend({
   tagName: 'form',
   className: 'create-form',
-  template: JST['create'],
+  template: JST['create-item'],
   events: {
-    'click .create-image':'hidden'
+    'click .js-toggle-hidden':'hidden',
+    'click .js-add-image': 'addImage'
   },
   render: function(){
     this.$el.html(this.template());
@@ -13,17 +14,21 @@ var CreateImage = Backbone.View.extend({
     return this;
   },
   hidden: function(){
-    this.$('.create-div').toggleClass('hidden')
+  this.$('.create-form').toggleClass('.hidden');
+  },
+  addImage: function(e){
+    e.preventDefault();
+    var collection = new ImageCollection();
+    collection.create(this.serialize());
   },
   serialize: function(){
     var result = {};
-    console.log(result);
     var input = this.$el.serializeArray();
     input.forEach(function(input){
-        result[input.name] = input.value;
+    result[input.name] = input.value;
     });
     return result;
-  }
+    }
 });
 
 module.exports = CreateImage;

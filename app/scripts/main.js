@@ -6,13 +6,15 @@ var CreateImage = require('views/createImage');
 $(document).ready(function(){
   // prepend the contents of `app/templates/application.hbs` into `body`
   $('#container').append(JST.application());
+
   var images = new ImageCollection();
 
-  var createImage = new CreateImage();
-  $('#container').append(createImage.render().el)
 
   var ListImageView = new ImageCollectionView({collection: images});
-  $("#image-container").html(ListImageView.render().el);
+  $("#container").append(ListImageView.render().el);
+
+  var createImage = new CreateImage({model: imageModel});
+  $('#image-container').html(createImage.render().el);
 
 
   images.fetch()
