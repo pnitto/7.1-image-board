@@ -1,3 +1,5 @@
+var ListItemView = require('views/imageCollectionView');
+
 var imageItemView = Backbone.View.extend({
   tagName: 'li',
   template: JST['image-item'],
@@ -5,7 +7,8 @@ var imageItemView = Backbone.View.extend({
   events: {
     'click .delete-btn': 'delete',
     'click .edit-btn' : 'edit',
-    'click .update-btn': 'update'
+    'click .update-btn': 'update',
+    'click .cancel-btn': 'cancel'
   },
   render: function(){
     this.$el.html(this.template(this.model.toJSON()));
@@ -17,7 +20,9 @@ var imageItemView = Backbone.View.extend({
   edit: function(){
     this.$('.image').css('display','block');
     this.$('.edit-btn').hide();
+    this.$('.delete-btn').hide();
     this.$('.update-btn').show();
+    this.$('.cancel-btn').show();
 
     var image = this.$('.image').html();
     var post = this.$('.post').html();
@@ -29,6 +34,9 @@ var imageItemView = Backbone.View.extend({
     this.model.set('post', $('.post-update').val());
     this.model.save()
     return this;
+  },
+  cancel: function(){
+    ListItemView.render();
   }
 
 });
