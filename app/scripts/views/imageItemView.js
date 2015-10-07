@@ -15,9 +15,9 @@ var imageItemView = Backbone.View.extend({
     this.model.destroy();
   },
   edit: function(){
-    $('.image').css('display','block');
-    $('.edit-btn').hide();
-    $('.update-btn').show();
+    this.$('.image').css('display','block');
+    this.$('.edit-btn').hide();
+    this.$('.update-btn').show();
 
     var image = this.$('.image').html();
     var post = this.$('.post').html();
